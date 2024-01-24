@@ -34,7 +34,7 @@ abstract class InfoTask : SemanticVersioningTask() {
         logger.info("Log prefix (${config.logEntryPrefixes.caseInsensitive}):")
         logger.info("     BUG: ${config.logEntryPrefixes.bugfix.joinToString()}")
         logger.info("     NEW: ${config.logEntryPrefixes.newFeature.joinToString()}")
-        logger.info("     INC: ${config.logEntryPrefixes.incompatibility.joinToString()}")
+        logger.info("     INC: ${config.logEntryPrefixes.breaking.joinToString()}")
 
         val git = GitTools(project.rootProject.rootDir)
         logger.lifecycle("Current branch: " + git.getCurrentBranch())

@@ -25,7 +25,7 @@ class CommitInfo(val messages: Map<GitLogEntryTypes, List<String>>) {
             val messages: Map<GitLogEntryTypes, MutableList<String>> = GitLogEntryTypes.entries.associateWith { mutableListOf() }
 
                 commitMessages.forEach { m ->
-                    var trimmed = checkAndTrim(m, prefixes.incompatibility, prefixes.caseInsensitive)
+                    var trimmed = checkAndTrim(m, prefixes.breaking, prefixes.caseInsensitive)
                     if (trimmed != null) messages.getValue(GitLogEntryTypes.BREAKING) += trimmed
 
                     trimmed = checkAndTrim(m, prefixes.newFeature, prefixes.caseInsensitive)

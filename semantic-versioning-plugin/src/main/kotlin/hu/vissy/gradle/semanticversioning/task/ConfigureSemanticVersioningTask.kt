@@ -27,10 +27,10 @@ abstract class ConfigureSemanticVersioningTask : SemanticVersioningTask() {
             config.logEntryPrefixes.newFeature.add("[new]")
         }
 
-        if (config.logEntryPrefixes.incompatibility.isEmpty()) {
-            config.logEntryPrefixes.incompatibility.add("!")
-            config.logEntryPrefixes.incompatibility.add("[breaking]")
-            config.logEntryPrefixes.incompatibility.add("[incompatibility]")
+        if (config.logEntryPrefixes.breaking.isEmpty()) {
+            config.logEntryPrefixes.breaking.add("!")
+            config.logEntryPrefixes.breaking.add("[breaking]")
+            config.logEntryPrefixes.breaking.add("[incompatibility]")
         }
 
         if (!config.initialVersion.matches("[0-9]+\\.[0-9]+\\.[0-9]+".toRegex()))

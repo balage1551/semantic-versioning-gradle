@@ -8,13 +8,14 @@ enum class GitLogEntryTypes : Serializable {
     BUGFIXES
 }
 
+@Suppress("DuplicatedCode")
 open class LogEntryPrefixes {
-    /** Prefixes used for detecting bugfix notes in commit messages. Default: `[fix]` and `%` */
+    /** Prefixes used for detecting bugfix notes in commit messages. Default: &#91;`fix]` and `%` */
     val bugfix = mutableSetOf<String>()
-    /** Prefixes used for detecting new feature notes in commit messages. Default: `[new]` and `+` */
+    /** Prefixes used for detecting new feature notes in commit messages. Default: &#91;`new]` and `+` */
     val newFeature = mutableSetOf<String>()
-    /** Prefixes used for detecting compatibility breaking change notes in commit messages. Default: `[breaking]` and `!` */
-    val incompatibility = mutableSetOf<String>()
+    /** Prefixes used for detecting compatibility breaking change notes in commit messages. Default: &#91;`breaking]` and `!` */
+    val breaking = mutableSetOf<String>()
     /** Whether the check for prefixes handled case-insensitive mode. */
     val caseInsensitive = true
 
@@ -26,7 +27,7 @@ open class LogEntryPrefixes {
 
         if (bugfix != other.bugfix) return false
         if (newFeature != other.newFeature) return false
-        if (incompatibility != other.incompatibility) return false
+        if (breaking != other.breaking) return false
         if (caseInsensitive != other.caseInsensitive) return false
 
         return true
@@ -35,7 +36,7 @@ open class LogEntryPrefixes {
     override fun hashCode(): Int {
         var result = bugfix.hashCode()
         result = 31 * result + newFeature.hashCode()
-        result = 31 * result + incompatibility.hashCode()
+        result = 31 * result + breaking.hashCode()
         result = 31 * result + caseInsensitive.hashCode()
         return result
     }
@@ -43,6 +44,7 @@ open class LogEntryPrefixes {
 
 }
 
+@Suppress("unused", "DuplicatedCode")
 open class SemanticVersionConfigurationExtension {
 
     /** Ignore state check and execute the tasks each time. Default is false. */
