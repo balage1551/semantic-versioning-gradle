@@ -43,3 +43,13 @@ semanticVersion {
 | logPrefixes.caseInsensitive | boolean | true | Whether handle log prefixes in a case-insensitive way. |
 
 
+### Tasks
+
+#### versionInfo
+
+Provides read-only information on the calculated next version.
+
+
+#### commitVersion
+
+Calculates the new version and commits it to the git as a new tag.
