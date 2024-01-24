@@ -59,7 +59,7 @@ abstract class InfoTask : SemanticVersioningTask() {
         logger.info("Last version: ${lastVersion.versionSequence}")
         logger.lifecycle("Last version string: ${lastVersion.releaseString}")
 
-        var newVersion = Version(lastVersion, info = config.versionPrefix)
+        var newVersion = Version(lastVersion, info = config.versionSuffix)
 
         val commits = git.getCommitsFrom(lastTag)
         logger.info("Commits:\n" + commits.joinToString("\n   ", "   "))

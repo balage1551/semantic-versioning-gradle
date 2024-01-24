@@ -67,7 +67,7 @@ open class SemanticVersionConfigurationExtension {
     var initialVersion = "1.0.0"
 
     /** Optional postfix appended to the version name, like -RC1 ör -SNAPSHOT. Default is empty. */
-    var versionPrefix = ""
+    var versionSuffix = ""
 
     /** The prefixes used to detect and categorize commit message entries. */
     fun logPrefixes(op: LogEntryPrefixes.() -> Unit) {
