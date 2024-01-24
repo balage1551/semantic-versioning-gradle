@@ -36,8 +36,8 @@ data class Version(val prefix: String, val major: Int, val minor: Int, val patch
 
     fun updateInfo(info: String) = Version(this, info = info)
 
-    val versionSequence = "$major.$minor.$patch"
-    val releaseString = "$prefix$versionSequence" + if (info.isNotBlank()) "-$info" else ""
+    val versionSequence = "$major.$minor.$patch"+ if (info.isNotBlank()) "-$info" else ""
+    val releaseString = "$prefix$versionSequence"
 
     override fun toString() = releaseString
     fun toJson(root: JsonObject) = jsonObject(root) {

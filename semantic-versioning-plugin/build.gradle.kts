@@ -30,15 +30,14 @@ val signingKeyId = project.findProperty("signing.keyId")
 
 
 gradlePlugin {
-    website.set("https://bitbucket.org/balage42/semantic-versioning-gradle")
-    vcsUrl.set("https://bitbucket.org/balage42/semantic-versioning-gradle")
+    website.set("https://github.com/balage1551/semantic-versioning-gradle/")
+    vcsUrl.set("https://github.com/balage1551/semantic-versioning-gradle/")
     plugins {
         create("semanticVersioningPlugin") {
             id="hu.vissy.gradle.semanticVersioning"
             implementationClass = "hu.vissy.gradle.semanticversioning.SemanticVersioningPlugin"
             displayName = "Semantic Versioning plugin"
-            description = "Generate and update versioning based on specially tagged git commit message lines. " +
-                    "Optionally generates change logs, too."
+            description = "Generate and update versioning based on specially tagged git commit message lines. "
             tags.set(listOf("semantic versioning"))
         }
     }

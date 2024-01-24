@@ -5,6 +5,7 @@ import hu.vissy.gradle.semanticversioning.task.ConfigureSemanticVersioningTask
 import hu.vissy.gradle.semanticversioning.task.InfoTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.Task
 import java.time.LocalDateTime
 
 const val GROUP_NAME = "semantic versioning"
@@ -12,22 +13,24 @@ const val GROUP_NAME = "semantic versioning"
 class SemanticVersioningPlugin : Plugin<Project> {
     override fun apply(project: Project) {
         val configExtension = project.extensions.create("semanticVersion", SemanticVersionConfigurationExtension::class.java)
-//        val runtimeExtension = project.extensions.create("semanticVersionRuntime", SemanticVersionRuntimeExtension::class.java)
 
-//
         val configure = project.tasks.register("configureExtension", ConfigureSemanticVersioningTask::class.java)
 
+        fun addInputs(task: Task) {
+            task.inputs.property("configHash", configExtension.hashCode())
+            if (configExtension.forced) {
+                task.inputs.property("touch", LocalDateTime.now().hashCode())
+            }
+        }
 
         val versionInfo = project.tasks.register("versionInfo", InfoTask::class.java) {
             it.dependsOn(configure)
-            it.inputs.property("configHash", configExtension.hashCode())
-            it.inputs.property("touch", LocalDateTime.now().hashCode())
+            addInputs(it)
         }
 
         val commitVersion = project.tasks.register("commitVersion", CommitVersionTask::class.java) {
             it.dependsOn(versionInfo)
-            it.inputs.property("configHash", configExtension.hashCode())
-            it.inputs.property("touch", LocalDateTime.now().hashCode())
+            addInputs(it)
         }
 
 //        val releaseWithVersion = project.tasks.register("releaseWithVersion", ReleaseWithVersionTask::class.java) {
@@ -45,6 +48,7 @@ class SemanticVersioningPlugin : Plugin<Project> {
 //                create("closeVersion", CloseVersioningTask::class.java) { group = "releasing" }
 //            }
     }
+
 }
 
 

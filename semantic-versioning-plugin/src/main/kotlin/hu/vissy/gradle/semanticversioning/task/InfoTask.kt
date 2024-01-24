@@ -84,6 +84,8 @@ abstract class InfoTask : SemanticVersioningTask() {
         newVersion.toJson(data)
         commitInfo.toJson(data)
         outputFile.get().asFile.writeText(data.toPretty())
+
+        project.rootProject.version = newVersion.versionSequence
     }
 }
 

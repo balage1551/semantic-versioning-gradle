@@ -80,50 +80,28 @@ open class SemanticVersionConfigurationExtension {
 
         other as SemanticVersionConfigurationExtension
 
+        if (forced != other.forced) return false
         if (acceptedBranches != other.acceptedBranches) return false
         if (releaseTagPrefix != other.releaseTagPrefix) return false
         if (logEntryPrefixes != other.logEntryPrefixes) return false
         if (allowDirtyLocal != other.allowDirtyLocal) return false
+        if (initialVersion != other.initialVersion) return false
+        if (versionSuffix != other.versionSuffix) return false
 
         return true
     }
 
     override fun hashCode(): Int {
-        var result = acceptedBranches.hashCode()
-        result = 31 * result + releaseTagPrefix.hashCode()
+        var result = forced.hashCode()
+        result = 31 * result + acceptedBranches.hashCode()
+        result = 31 * result + (releaseTagPrefix?.hashCode() ?: 0)
         result = 31 * result + logEntryPrefixes.hashCode()
         result = 31 * result + allowDirtyLocal.hashCode()
+        result = 31 * result + initialVersion.hashCode()
+        result = 31 * result + versionSuffix.hashCode()
         return result
     }
 
-
-//    var releaseNotesFile: String? = null
-//        set(value) {
-//            field = value
-//            if (value == null)
-//                releaseNotesHtmlFile = null
-//            else
-//                releaseNotesHtmlFile = value.replaceAfterLast(".", "html")
-//        }
-//
-//    var releaseNotesHtmlFile: String? = null
-//        private set
-//
-//    var versionFile: String? = "version.txt"
-//
-//    var internalReleaseLabel = "*Internal release*"
-//    var keepInternalReleases = false
-//    var releaseTimeFormatter: DateTimeFormatter = DateTimeFormatterBuilder()
-//            .append(ISO_LOCAL_DATE)
-//            .appendLiteral(' ')
-//            .append(ISO_LOCAL_TIME)
-//            .toFormatter()
-
-//    val state: SemanticVersionState by lazy {
-//        SemanticVersionState(project)
-//    } //? = null
-//
-//    val hasNewVersion by lazy { state.newVersion != state.currentVersion }
 
 }
 

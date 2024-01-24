@@ -1,6 +1,7 @@
 plugins {
     kotlin("jvm") version "1.9.22"
     id("hu.vissy.gradle.semanticVersioning") version "0.9"
+    application
 }
 
 repositories {
@@ -16,7 +17,7 @@ semanticVersion {
     acceptedBranches.addAll(listOf("master", "main"))
     allowDirtyLocal = true
     releaseTagPrefix= "v"
-    versionPrefix = "RC1"
+    versionSuffix = "RC1"
     initialVersion = "1.0.0"
     logPrefixes {
         bugfix.addAll(listOf("%", "[fix]"))
@@ -29,3 +30,14 @@ java {
     targetCompatibility = JavaVersion.VERSION_17
 }
 
+application {
+    mainClass = "hu.vissy.hello.HelloWorldKt"
+}
+
+
+tasks.named("distZip") {
+    dependsOn("versionInfo")
+    doLast {
+        println("++++V: ${project.version}")
+    }
+}
