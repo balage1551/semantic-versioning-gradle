@@ -12,11 +12,14 @@ dependencies {
 }
 
 semanticVersion {
-    forced = true
+    forced = false
+    acceptedBranches.addAll(listOf("master", "main"))
     allowDirtyLocal = true
-    releaseTagPrefix= "test"
+    releaseTagPrefix= "v"
     versionPrefix = "RC1"
+    initialVersion = "1.0.0"
     logPrefixes {
+        bugfix.addAll(listOf("%", "[fix]"))
         bugfix.addAll(listOf("%", "[fix]"))
     }
 }
