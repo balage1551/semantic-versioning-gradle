@@ -8,7 +8,7 @@ marks the versions in git by tags.
 
 ### Import
 
-[TODO] 
+See https://plugins.gradle.org/plugin/hu.vissy.gradle.semanticVersioning  
 
 ### Configuration
 

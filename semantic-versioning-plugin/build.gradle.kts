@@ -3,6 +3,7 @@ plugins {
     id("com.gradle.plugin-publish") version "1.2.1"
     signing
     kotlin("jvm") version "1.9.22"
+    id("hu.vissy.gradle.semanticVersioning") version "0.9"
     `maven-publish`
 }
 
@@ -11,8 +12,8 @@ repositories {
     mavenCentral()
 }
 
-version="0.9"
 group="hu.vissy.gradle"
+
 
 dependencies {
     // Use JUnit test framework for unit tests
@@ -28,6 +29,10 @@ java {
 
 val signingKeyId = project.findProperty("signing.keyId")
 
+semanticVersion {
+    releaseTagPrefix = "v"
+    allowDirtyLocal = true
+}
 
 gradlePlugin {
     website.set("https://github.com/balage1551/semantic-versioning-gradle/")
