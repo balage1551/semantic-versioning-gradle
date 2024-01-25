@@ -24,7 +24,8 @@ semanticVersion {
     initialVersion = "1.0.0"
     logPrefixes {
         bugfix.addAll(listOf("%", "[fix]"))
-        bugfix.addAll(listOf("%", "[fix]"))
+        newFeature.addAll(listOf("+", "[new]"))
+        breaking.addAll(listOf("!", "[breaking]"))
     }
 }
 ```

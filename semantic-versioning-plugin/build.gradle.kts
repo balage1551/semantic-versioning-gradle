@@ -1,3 +1,5 @@
+import hu.vissy.gradle.semanticversioning.task.InfoTask
+
 plugins {
     // Apply the Java Gradle plugin development plugin to add support for developing Gradle plugins
     id("com.gradle.plugin-publish") version "1.2.1"
@@ -13,6 +15,7 @@ repositories {
 }
 
 group="hu.vissy.gradle"
+version="1.0.0"
 
 
 dependencies {
@@ -33,6 +36,15 @@ semanticVersion {
     releaseTagPrefix = "v"
     allowDirtyLocal = true
 }
+
+
+tasks.named("jar") {
+    dependsOn("versionInfo")
+    doLast {
+        logger.lifecycle("Building with version: ${project.version}")
+    }
+}
+
 
 gradlePlugin {
     website.set("https://github.com/balage1551/semantic-versioning-gradle/")
