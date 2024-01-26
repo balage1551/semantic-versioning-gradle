@@ -27,21 +27,23 @@ semanticVersion {
         newFeature.addAll(listOf("+", "[new]"))
         breaking.addAll(listOf("!", "[breaking]"))
     }
+    pushTag = true
 }
 ```
 
-| Parameter  | Type  | Default  | Description   |
-| ------------- |:-------------:|:----- |:----- |
-| forced  | boolean  | false | When set, the tasks will execute regardless the input state.  |
-| acceptedBranches  | Set<String>  | {master, main} | On which branches the new releases could be made.  |
-| allowDirtyLocal  | boolean | false | Whether release creation is allowed when there are any uncommitted changes. |
-| releaseTagPrefix  | string | `"release"` | The tag prefix used in git tags marking releases. |
-| versionSuffix | string | `""` | Optional suffix (like `SNAPSHOT` or `RC1`) placed after the version number. |
-| initialVersion | string | `"1.0.0"` | Initial version number used when no version tag found in the git. |
-| logPrefixes.bugfix | set<String> | `{"%", "[fix]"}` | The log entry prefixes used to locate bugfix related git commit message entries. |
-| logPrefixes.newFeature | set<String> | `{"+", "[new]"}` | The log entry prefixes used to locate new feature related git commit message entries. |
-| logPrefixes.breaking | set<String> | `{"!", "[breaking]"}` | The log entry prefixes used to locate breaking change related git commit message entries. |
-| logPrefixes.caseInsensitive | boolean | true | Whether handle log prefixes in a case-insensitive way. |
+| Parameter                   |    Type     | Default               | Description                                                                               |
+|-----------------------------|:-----------:|:----------------------|:------------------------------------------------------------------------------------------|
+| forced                      |   boolean   | false                 | When set, the tasks will execute regardless the input state.                              |
+| acceptedBranches            | Set<String> | {master, main}        | On which branches the new releases could be made.                                         |
+| allowDirtyLocal             |   boolean   | false                 | Whether release creation is allowed when there are any uncommitted changes.               |
+| releaseTagPrefix            |   string    | `"release"`           | The tag prefix used in git tags marking releases.                                         |
+| versionSuffix               |   string    | `""`                  | Optional suffix (like `SNAPSHOT` or `RC1`) placed after the version number.               |
+| initialVersion              |   string    | `"1.0.0"`             | Initial version number used when no version tag found in the git.                         |
+| pushTag                     |   boolean   | true                  | The generated tag is automatically pushed by commitVersion task.                          |
+| logPrefixes.bugfix          | set<String> | `{"%", "[fix]"}`      | The log entry prefixes used to locate bugfix related git commit message entries.          |
+| logPrefixes.newFeature      | set<String> | `{"+", "[new]"}`      | The log entry prefixes used to locate new feature related git commit message entries.     |
+| logPrefixes.breaking        | set<String> | `{"!", "[breaking]"}` | The log entry prefixes used to locate breaking change related git commit message entries. |
+| logPrefixes.caseInsensitive |   boolean   | true                  | Whether handle log prefixes in a case-insensitive way.                                    |
 
 
 ### Tasks

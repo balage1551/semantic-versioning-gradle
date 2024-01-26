@@ -8,6 +8,7 @@ import org.eclipse.jgit.lib.Repository
 import org.eclipse.jgit.revwalk.RevCommit
 import org.eclipse.jgit.revwalk.RevWalk
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder
+import org.eclipse.jgit.transport.RefSpec
 import java.io.File
 import java.util.*
 
@@ -78,6 +79,14 @@ class GitTools(dir: File) {
         val revWalk = RevWalk(repository)
         val head = repository.resolve(Constants.HEAD)
         return revWalk.parseCommit(head)
+    }
+
+    fun push(tags: Boolean) {
+        val pushCmd = git.push()
+        if (tags) {
+            pushCmd.setRefSpecs(RefSpec("refs/tags/*:refs/tags/*"))
+        }
+        pushCmd.call()
     }
 
 

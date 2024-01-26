@@ -69,6 +69,9 @@ open class SemanticVersionConfigurationExtension {
     /** Optional postfix appended to the version name, like -RC1 ör -SNAPSHOT. Default is empty. */
     var versionSuffix = ""
 
+    /** Whether commitVersion task should automatically push the created release tag */
+    var pushTag = false
+
     /** The prefixes used to detect and categorize commit message entries. */
     fun logPrefixes(op: LogEntryPrefixes.() -> Unit) {
         logEntryPrefixes.apply(op)

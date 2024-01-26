@@ -37,6 +37,7 @@ abstract class CommitVersionTask : SemanticVersioningTask() {
         val git = GitTools(project.rootProject.rootDir)
         git.createCommit(version.releaseString)
         git.createTag(version.releaseString)
+        if (config.pushTag) git.push(true)
 
 //        val git = GitTools(project.rootProject.rootDir)
 //        logger.lifecycle("Current branch: " + git.getCurrentBranch())
