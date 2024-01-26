@@ -1,11 +1,9 @@
-import hu.vissy.gradle.semanticversioning.task.InfoTask
-
 plugins {
     // Apply the Java Gradle plugin development plugin to add support for developing Gradle plugins
     id("com.gradle.plugin-publish") version "1.2.1"
     signing
     kotlin("jvm") version "1.9.22"
-    id("hu.vissy.gradle.semanticVersioning") version "0.9"
+    id("hu.vissy.gradle.semanticVersioning") version "[0.9,2.0.0)"
     `maven-publish`
 }
 
@@ -15,7 +13,6 @@ repositories {
 }
 
 group="hu.vissy.gradle"
-version="1.0.0"
 
 
 dependencies {
@@ -39,10 +36,16 @@ semanticVersion {
 
 
 tasks.named("jar") {
-    dependsOn("versionInfo")
+    dependsOn("setSemanticVersion")
     doLast {
         logger.lifecycle("Building with version: ${project.version}")
     }
+    finalizedBy("commitVersion")
+}
+
+
+tasks.named("publishPlugins") {
+    finalizedBy("commitVersion")
 }
 
 

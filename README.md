@@ -52,7 +52,35 @@ semanticVersion {
 
 Provides read-only information on the calculated next version.
 
+#### setSemanticVersion
+
+This tasks sets the `project.version` to the calculated semantic version. This task should be
+added as dependency to one of your build tasks (for example to `jar` or `distXXX`):
 
 #### commitVersion
 
-Calculates the new version and commits it to the git as a new tag.
+Calculates the new version and commits it to the git as a new tag. If `pushTag` is true (default)
+the tags are pushed as well.
+
+
+### Using in other tasks
+
+To access the calculated version, a dependency should be added to one of your build tasks. 
+A good place for this could be `jar`, but you might choose to move it up in the build chain.
+
+This is an example of usual usage of the versioning:
+
+```kotlin
+tasks.named("jar") {
+    dependsOn("setSemanticVersion")
+}
+```
+
+Also, in most cases, you will wish to add the commit as the last task in the
+chain (`distXXX` or `publish`):
+
+```kotlin
+tasks.named("publishPlugins") {
+    finalizedBy("commitVersion")
+}
+```

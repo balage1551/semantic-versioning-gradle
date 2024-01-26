@@ -28,6 +28,12 @@ abstract class InfoTask : SemanticVersioningTask() {
     @TaskAction
     fun action() {
 
+        if (project.gradle.taskGraph.hasTask(name) && !didWork) {
+            println("SHOULD RUN")
+            // Do costly operations here
+            // ...
+        }
+
         logger.info("Branches:   ${config.acceptedBranches}")
         logger.info("Dirty:      ${config.allowDirtyLocal}")
         logger.info("Tag prefix: ${config.releaseTagPrefix}")
@@ -85,7 +91,6 @@ abstract class InfoTask : SemanticVersioningTask() {
         commitInfo.toJson(data)
         outputFile.get().asFile.writeText(data.toPretty())
 
-        project.rootProject.version = newVersion.versionSequence
     }
 }
 

@@ -3,6 +3,7 @@ package hu.vissy.gradle.semanticversioning
 import hu.vissy.gradle.semanticversioning.task.CommitVersionTask
 import hu.vissy.gradle.semanticversioning.task.ConfigureSemanticVersioningTask
 import hu.vissy.gradle.semanticversioning.task.InfoTask
+import hu.vissy.gradle.semanticversioning.task.SetSemanticVersionTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.Task
@@ -28,10 +29,15 @@ class SemanticVersioningPlugin : Plugin<Project> {
             addInputs(it)
         }
 
-        val commitVersion = project.tasks.register("commitVersion", CommitVersionTask::class.java) {
+        val setVersion = project.tasks.register("setSemanticVersion", SetSemanticVersionTask::class.java) {
             it.dependsOn(versionInfo)
+        }
+
+        val commitVersion = project.tasks.register("commitVersion", CommitVersionTask::class.java) {
+            it.dependsOn(setVersion)
             addInputs(it)
         }
+
 
 //        val releaseWithVersion = project.tasks.register("releaseWithVersion", ReleaseWithVersionTask::class.java) {
 //            it.dependsOn(versionInfo)

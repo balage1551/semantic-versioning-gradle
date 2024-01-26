@@ -30,14 +30,15 @@ java {
     targetCompatibility = JavaVersion.VERSION_17
 }
 
-application {
-    mainClass = "hu.vissy.hello.HelloWorldKt"
-}
 
 
-tasks.named("distZip") {
-    dependsOn("versionInfo")
+tasks.named("jar") {
+    dependsOn("setSemanticVersion")
     doLast {
         println("++++V: ${project.version}")
     }
+}
+
+application {
+    mainClass = "hu.vissy.hello.HelloWorldKt"
 }
