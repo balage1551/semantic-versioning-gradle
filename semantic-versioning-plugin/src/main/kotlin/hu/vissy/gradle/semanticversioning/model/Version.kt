@@ -4,7 +4,7 @@ import com.google.gson.JsonObject
 import hu.vissy.gradle.semanticversioning.SemanticVersioningException
 import hu.vissy.gradle.semanticversioning.util.jsonObject
 
-data class Version(val prefix: String, val major: Int, val minor: Int, val patch: Int, val info: String = "") {
+data class Version(val prefix: String, val major: Int, val minor: Int, val patch: Int, val info: String = "") : Comparable<Version> {
     constructor(old: Version, prefix: String = old.prefix, major: Int = old.major, minor: Int = old.minor, patch: Int = old.patch, info: String = old.info) :
             this(prefix, major, minor, patch, info)
 
@@ -42,5 +42,11 @@ data class Version(val prefix: String, val major: Int, val minor: Int, val patch
     override fun toString() = releaseString
     fun toJson(root: JsonObject) = jsonObject(root) {
         JSON_NEW_VERSION += releaseString
+    }
+
+    override fun compareTo(other: Version): Int {
+        if (major != other.major) return major - other.major
+        if (minor != other.minor) return minor - other.minor
+        return patch - other.patch
     }
 }

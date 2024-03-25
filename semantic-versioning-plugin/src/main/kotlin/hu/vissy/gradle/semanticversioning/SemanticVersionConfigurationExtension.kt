@@ -72,6 +72,9 @@ open class SemanticVersionConfigurationExtension {
     /** Whether commitVersion task should automatically push the created release tag */
     var pushTag = false
 
+    /** The version to be used instead of the calculated one. Use with caution! */
+    var overrideVersion = ""
+
     /** The prefixes used to detect and categorize commit message entries. */
     fun logPrefixes(op: LogEntryPrefixes.() -> Unit) {
         logEntryPrefixes.apply(op)
@@ -90,6 +93,7 @@ open class SemanticVersionConfigurationExtension {
         if (allowDirtyLocal != other.allowDirtyLocal) return false
         if (initialVersion != other.initialVersion) return false
         if (versionSuffix != other.versionSuffix) return false
+        if (overrideVersion != other.overrideVersion) return false
 
         return true
     }
@@ -102,6 +106,7 @@ open class SemanticVersionConfigurationExtension {
         result = 31 * result + allowDirtyLocal.hashCode()
         result = 31 * result + initialVersion.hashCode()
         result = 31 * result + versionSuffix.hashCode()
+        result = 31 * result + overrideVersion.hashCode()
         return result
     }
 

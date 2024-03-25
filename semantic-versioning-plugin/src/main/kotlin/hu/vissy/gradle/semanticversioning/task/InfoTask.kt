@@ -55,32 +55,38 @@ abstract class InfoTask : SemanticVersioningTask() {
         val tagRegex = "refs/tags/${Pattern.quote(config.releaseTagPrefix)}[0-9]+\\.[0-9]+\\.[0-9]+(-.*)?".toRegex()
         val versionTags = git.getTags { it.name.matches(tagRegex) }
 
-        val lastTag = versionTags.lastOrNull()
-        val lastVersion: Version =
-            if (lastTag == null) {
+        logger.debug("Tags: ${versionTags.joinToString(", ")}")
+
+        val lastVersion = versionTags.maxOfOrNull { Version.fromString(it, config.releaseTagPrefix ?: "") } ?:
                 Version.fromString("${config.releaseTagPrefix}${config.initialVersion}", config.releaseTagPrefix!!)
-            } else {
-                Version.fromString(lastTag, config.releaseTagPrefix ?: "")
-            }
         logger.info("Last version: ${lastVersion.versionSequence}")
         logger.lifecycle("Last version string: ${lastVersion.releaseString}")
 
         var newVersion = Version(lastVersion, info = config.versionSuffix)
+        val commitInfo: CommitInfo
 
-        val commits = git.getCommitsFrom(lastTag)
-        logger.info("Commits:\n" + commits.joinToString("\n   ", "   "))
-        val commitInfo = CommitInfo.fromList(commits, config.logEntryPrefixes)
-        logger.info("Stat: " + commitInfo.statistics)
+        if (config.overrideVersion.isNotBlank()) {
+            logger.lifecycle("Forced version: ${config.overrideVersion}.")
+            newVersion = Version.fromString(config.overrideVersion, config.releaseTagPrefix ?: "")
+            commitInfo = CommitInfo.fromList(emptyList(), config.logEntryPrefixes)
+        } else {
+            val commits = git.getCommitsFrom(lastVersion.releaseString)
+            logger.info("Commits:\n" + commits.joinToString("\n   ", "   "))
+            commitInfo = CommitInfo.fromList(commits, config.logEntryPrefixes)
+            logger.info("Stat: " + commitInfo.statistics)
 
-        newVersion = when {
-            commitInfo.statistics.getValue(GitLogEntryTypes.BREAKING) > 0 -> {
-                newVersion.incMajor()
-            }
-            commitInfo.statistics.getValue(GitLogEntryTypes.NEW_FEATURE) > 0 -> {
-                newVersion.incMinor()
-            }
-            else -> {
-                newVersion.incPatch()
+            newVersion = when {
+                commitInfo.statistics.getValue(GitLogEntryTypes.BREAKING) > 0 -> {
+                    newVersion.incMajor()
+                }
+
+                commitInfo.statistics.getValue(GitLogEntryTypes.NEW_FEATURE) > 0 -> {
+                    newVersion.incMinor()
+                }
+
+                else -> {
+                    newVersion.incPatch()
+                }
             }
         }
 
