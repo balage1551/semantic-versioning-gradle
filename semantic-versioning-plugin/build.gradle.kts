@@ -30,6 +30,7 @@ java {
 val signingKeyId = project.findProperty("signing.keyId")
 
 semanticVersion {
+    forced = true
     releaseTagPrefix = "v"
     allowDirtyLocal = true
 }
